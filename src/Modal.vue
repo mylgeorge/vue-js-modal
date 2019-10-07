@@ -433,16 +433,16 @@ export default {
      */
     handleModalResize (event) {
       this.modal.widthType = 'px'
-      this.modal.width = event.size.width
+    //   this.modal.width = event.size.width
 
       this.modal.heightType = 'px'
-      this.modal.height = event.size.height
+    //   this.modal.height = event.size.height
 
       const { size } = this.modal
 
       this.$emit(
         'resize',
-        this.createModalEvent({ size })
+        this.createModalEvent({ size, event })
       )
     },
     /**

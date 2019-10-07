@@ -47,6 +47,12 @@ export default {
 
       event.stopPropagation()
       event.preventDefault()
+
+        this.$emit('resize-start', {
+            element: this.$el.parentElement,
+            size: this.size,
+            event
+        })
     },
     stop () {
       this.clicked = false
@@ -56,7 +62,8 @@ export default {
 
       this.$emit('resize-stop', {
         element: this.$el.parentElement,
-        size: this.size
+        size: this.size,
+        event
       })
     },
     mousemove (event) {
@@ -69,19 +76,24 @@ export default {
         var width = event.clientX - el.offsetLeft
         var height = event.clientY - el.offsetTop
 
+        var left = event.movementX
+        var top = event.movementY
+
         const maxWidth = Math.min(window.innerWidth, this.maxWidth)
         const maxHeight = Math.min(window.innerHeight, this.maxHeight)
 
         width = inRange(this.minWidth, maxWidth, width)
         height = inRange(this.minHeight, maxHeight, height)
 
-        this.size = { width, height }
         el.style.width = width + 'px'
         el.style.height = height + 'px'
 
+        this.size = { width, height, top, left }
+
         this.$emit('resize', {
           element: el,
-          size: this.size
+          size: this.size,
+          event
         })
       }
     }
